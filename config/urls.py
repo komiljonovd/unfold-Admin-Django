@@ -19,8 +19,8 @@ from django.contrib import admin
 from django.urls import path
 
 admin.site.site_header = ' '
-admin.site.site_title = 'Admin Panel'
-admin.site.index_title = 'WELCOME'
+admin.site.site_title = ' '
+admin.site.index_title = ' '
 
 urlpatterns = [
     path('admin/', admin.site.urls),
