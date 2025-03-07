@@ -26,7 +26,6 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
 class GroupAdmin(BaseGroupAdmin, ModelAdmin):
     pass
 
-from django.utils.html import format_html
 
 @admin.register(Report)
 class ReportAdmin(ModelAdmin):
