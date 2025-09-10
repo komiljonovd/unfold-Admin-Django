@@ -8,7 +8,6 @@ from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationFo
 from unfold.admin import ModelAdmin
 
 from unfoldapp import models
-from unfoldapp.models import Report
 
 # Register your models here.
 admin.site.unregister(User)
@@ -27,12 +26,5 @@ class GroupAdmin(BaseGroupAdmin, ModelAdmin):
     pass
 
 
-@admin.register(Report)
-class ReportAdmin(ModelAdmin):
-    list_display = ('id', 'name', 'description', 'isdeleted', 'createdon', 'modifiedon', 'createdby', 'modifiedby')
-    list_display_links = ('id', 'name', 'description')
-    list_filter = ('isdeleted', 'createdon', 'modifiedon', 'createdby', 'modifiedby')
-    search_fields = ('name', 'description', 'createdon', 'modifiedon', 'createdby', 'modifiedby')
-    ordering = ('id',)
-    list_per_page = 30
+    
 
