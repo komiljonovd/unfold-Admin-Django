@@ -16,6 +16,6 @@ class Report(models.Model):
         return self.name
 
     class Meta:
-        db_table = 'Report Admin'
-        verbose_name = 'Report Admin'
-        verbose_name_plural = 'Report Admin'
+        db_table = 'Report'
+        verbose_name = 'Report'
+        verbose_name_plural = 'Reports'
