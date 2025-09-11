@@ -148,7 +148,7 @@ from django.utils.translation import gettext_lazy as _
 UNFOLD = {
     "SITE_TITLE": "WORLD NEWS ",
     "SITE_HEADER": "WORLD NEWS",
-    "SITE_SUBHEADER": "Administration",
+    "SITE_SUBHEADER": "ADMINISTRATION",
 
     "SIDEBAR": {
         "show_search": False,       # Search in applications and models names

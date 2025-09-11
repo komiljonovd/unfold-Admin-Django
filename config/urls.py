@@ -22,7 +22,7 @@ from django.conf import settings
 
 # admin.site.site_header = 'KDA'
 # admin.site.site_title = 'Abdurakhimovich'
-admin.site.index_title = 'WELCOME !'
+admin.site.index_title = 'WELCOME TO ADMINISTRATION'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
