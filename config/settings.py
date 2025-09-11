@@ -129,9 +129,72 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
 
+STATIC_URL = "static/"
+STATIC_DIR = BASE_DIR / "static_src"
+STATICFILES_DIRS = [STATIC_DIR]
+STATIC_ROOT = BASE_DIR / "static"
+
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "media/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+
+UNFOLD = {
+    "SITE_TITLE": "WORLD NEWS ",
+    "SITE_HEADER": "WORLD NEWS",
+    "SITE_SUBHEADER": "Administration",
+
+    "SIDEBAR": {
+        "show_search": False,       # Search in applications and models names
+        "command_search": False,    # Replace the sidebar search with the command search
+        "show_all_applications": False,  # Dropdown with all applications and models
+        "navigation": [
+            {
+                "title": _("DEPARTMENTS"),
+                "separator": True,   # Top border
+                "collapsible": True, # Collapsible group of links
+                "items": [
+                    {
+                        "title": _("News"),
+                        "icon": "note_stack",  # Supported icon set: https://fonts.google.com/icons
+                        "link": reverse_lazy("admin:unfoldapp_news_changelist"),
+                        # "badge": "sample_app.badge_callback",
+                        "permission": lambda request: request.user.is_superuser,
+                    },
+                    {
+                        "title": _("Category"),
+                        "icon": "format_list_bulleted",
+                        "link": reverse_lazy("admin:unfoldapp_category_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": _("USERS & GROUPS"),
+                "separator": True,   # Top border
+                "collapsible": True, # Collapsible group of links
+                "items": [
+                    {
+                        "title": _("Users"),
+                        "icon": "person",
+                        "link": reverse_lazy("admin:auth_user_changelist"),
+                    },
+                    {
+                        "title": _("Groups"),
+                        "icon": "group",
+                        "link": reverse_lazy("admin:auth_group_changelist"),
+                    },
+                ],
+            },
+        ],
+    },
+
+    
+}
+
+
