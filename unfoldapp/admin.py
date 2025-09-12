@@ -33,6 +33,7 @@ class NewsAdmin(ModelAdmin):
     exclude = ["updated_at"]
     search_fields = ['title','description','category__name','content']
     list_filter = ['is_published']
+    actions = ['publish_news','hide_news']
 
     date_hierarchy = 'created_at'
 
@@ -50,6 +51,15 @@ class NewsAdmin(ModelAdmin):
         return obj.description[:100]+'...'
     short_description.short_description = 'Описание'
 
+    @admin.action(description='Опубликовать новость')
+    def publish_news(self, request, queryset):
+        filtered = queryset.exclude(is_published=True).update(is_published=True)
+        return self.message_user(request, f'Опубликовано : {filtered}')
+
+    @admin.action(description='Скрыть новость')
+    def hide_news(self, request, queryset):
+        filtered = queryset.exclude(is_published=False).update(is_published=False)
+        return self.message_user(request, f'Опубликовано : {filtered}')
 
 @admin.register(models.Category)
 class CategoryAdmin(ModelAdmin):
