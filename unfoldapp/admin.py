@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin,messages
 from unfold.contrib.forms.widgets import WysiwygWidget
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
@@ -9,6 +9,8 @@ from unfold.admin import ModelAdmin
 from django.utils.html import format_html
 
 from unfoldapp import models
+
+# from unfold.utils import dis
 
 # Register your models here.
 admin.site.unregister(User)
@@ -54,12 +56,12 @@ class NewsAdmin(ModelAdmin):
     @admin.action(description='Опубликовать новость')
     def publish_news(self, request, queryset):
         filtered = queryset.exclude(is_published=True).update(is_published=True)
-        return self.message_user(request, f'Опубликовано : {filtered}')
+        return self.message_user(request, f'Опубликовано : {filtered}',level=messages.SUCCESS)
 
     @admin.action(description='Скрыть новость')
     def hide_news(self, request, queryset):
         filtered = queryset.exclude(is_published=False).update(is_published=False)
-        return self.message_user(request, f'Опубликовано : {filtered}')
+        return self.message_user(request, f'Скрыто : {filtered}',level=messages.WARNING)
 
 @admin.register(models.Category)
 class CategoryAdmin(ModelAdmin):
