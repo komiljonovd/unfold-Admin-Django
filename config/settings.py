@@ -119,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 
@@ -152,8 +152,6 @@ LANGUAGES = (
     ('en', 'English'),
 )
 
-
-
 UNFOLD = {
     "SITE_TITLE": "WORLD NEWS ",
     "SITE_HEADER": "WORLD NEWS",
@@ -172,14 +170,13 @@ UNFOLD = {
             "900": "15, 35, 85",     # почти navy
             "950": "10, 20, 45",     
             },
-
     },
         "EXTENSIONS": {
         "modeltranslation": {
             "flags": {
-                "uz": "uz",
-                "ru": "ru",
-                "en": "en",
+                "uz": "🇺🇿",
+                "ru": "🇷🇺",
+                "en": "🇬🇧",
             },
         },
     },
@@ -231,8 +228,10 @@ UNFOLD = {
         ],
     },
 
-    
 }
 
 
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
+MODELTRANSLATION_LANGUAGES = ('uz', 'ru', 'en')  # фиксируем порядок языков
+
+MODELTRANSLATION_USE_COUNTRY_FLAGS = True
