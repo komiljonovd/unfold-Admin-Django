@@ -12,8 +12,8 @@ from unfold.decorators import display
 from django.utils.translation import gettext_lazy as _
 from unfoldapp.models import PublishedStatus
 from django.contrib.admin.models import LogEntry
-
-
+from django.utils import timezone
+from modeltranslation.admin import TabbedTranslationAdmin
 # Register your models here.
 admin.site.unregister(User)
 admin.site.unregister(Group)
@@ -30,16 +30,21 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
 class GroupAdmin(BaseGroupAdmin, ModelAdmin):
     pass
 
-@admin.register(models.News)
-class NewsAdmin(ModelAdmin):
-    list_display = ['image_tag','title','short_description','short_content','category','show_is_published','created_at','updated_at']
-    list_display_links = ['image_tag','title','short_description','short_content','category','created_at','updated_at']
+@admin.register(models.News,)
+class NewsAdmin(ModelAdmin,TabbedTranslationAdmin):
+    list_display = ['image_tag','title','short_description','short_content','category','show_views','show_is_published','created_at','updated_at']
+    list_display_links = ['image_tag','title','short_description','short_content','category','show_views','show_is_published','created_at','updated_at']
     exclude = ["updated_at"]
     search_fields = ['title','description','category__name','content']
     list_filter = ['is_published']
     actions = ['publish_news','hide_news']
-
+    exclude = ['views','updated_at']
     date_hierarchy = 'created_at'
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return self.readonly_fields + ('views',)
+        return super().get_readonly_fields(request, obj)
 
     def image_tag(self, obj):
         if obj.image:
@@ -48,11 +53,11 @@ class NewsAdmin(ModelAdmin):
     image_tag.short_description = 'Изображение'
 
     def short_content(self,obj):
-        return obj.content[:100]+'...'
+        return obj.content[:10]+'...'
     short_content.short_description = 'Контент'
 
     def short_description(self,obj):
-        return obj.description[:100]+'...'
+        return obj.description[:10]+'...'
     short_description.short_description = 'Описание'
 
     def is_published_display(self,obj):
@@ -69,20 +74,26 @@ class NewsAdmin(ModelAdmin):
     def show_is_published(self,obj):
         return (obj.is_published, obj.get_is_published_display())
 
-
+    @display(description='Просмотры',
+             ordering='views',
+             label={
+                 'views': None,
+             })
+    def show_views(self,obj):
+        return ('views', str(obj.views))   # преобразуем в строку
 
     @admin.action(description='Опубликовать новость')
     def publish_news(self, request, queryset):
-        filtered = queryset.exclude(is_published=True).update(is_published=True)
+        filtered = queryset.exclude(is_published=True).update(is_published=True,updated_at =timezone.now())
         return self.message_user(request, f'Опубликовано : {filtered}',level=messages.SUCCESS)
 
     @admin.action(description='Скрыть новость')
     def hide_news(self, request, queryset):
-        filtered = queryset.exclude(is_published=False).update(is_published=False)
+        filtered = queryset.exclude(is_published=False).update(is_published=False,updated_at = timezone.now())
         return self.message_user(request, f'Скрыто : {filtered}',level=messages.ERROR)
 
 @admin.register(models.Category)
-class CategoryAdmin(ModelAdmin):
+class CategoryAdmin(ModelAdmin,TabbedTranslationAdmin):
     list_display = ['image_tag','name','created_at','updated_at']
     list_display_links = ['image_tag','name','created_at','updated_at']
     exclude = ["updated_at"]

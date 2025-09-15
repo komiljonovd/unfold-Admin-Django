@@ -17,7 +17,7 @@ Including another URLconf
 from django.shortcuts import redirect
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from django.conf import settings
 
 # admin.site.site_header = 'KDA'
@@ -27,6 +27,13 @@ admin.site.index_title = 'WELCOME TO ADMINISTRATION'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', lambda request: redirect('admin/', permanent=False), ),
+
+
+
+
+
+
+
 ]
 
 if settings.DEBUG:

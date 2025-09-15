@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     "unfold.contrib.import_export",
     "unfold.contrib.guardian",
     "unfold.contrib.simple_history",
-
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -145,6 +145,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
+
+LANGUAGES = (
+    ('uz', 'Uzbek'),
+    ('ru', 'Russian'),
+    ('en', 'English'),
+)
+
+
+
 UNFOLD = {
     "SITE_TITLE": "WORLD NEWS ",
     "SITE_HEADER": "WORLD NEWS",
@@ -165,7 +174,15 @@ UNFOLD = {
             },
 
     },
-
+        "EXTENSIONS": {
+        "modeltranslation": {
+            "flags": {
+                "uz": "uz",
+                "ru": "ru",
+                "en": "en",
+            },
+        },
+    },
     "SIDEBAR": {
         "show_search": False,       # Search in applications and models names
         "command_search": False,    # Replace the sidebar search with the command search
@@ -180,7 +197,6 @@ UNFOLD = {
                         "title": _("News"),
                         "icon": "note_stack",  # Supported icon set: https://fonts.google.com/icons
                         "link": reverse_lazy("admin:unfoldapp_news_changelist"),
-                        # "badge": "sample_app.badge_callback",
                         "permission": lambda request: request.user.is_superuser,
                     },
                     {
@@ -219,3 +235,4 @@ UNFOLD = {
 }
 
 
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
