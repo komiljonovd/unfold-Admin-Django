@@ -11,6 +11,8 @@ from unfoldapp import models
 from unfold.decorators import display 
 from django.utils.translation import gettext_lazy as _
 from unfoldapp.models import PublishedStatus
+from django.contrib.admin.models import LogEntry
+
 
 # Register your models here.
 admin.site.unregister(User)
@@ -95,4 +97,19 @@ class CategoryAdmin(ModelAdmin):
 
 
     
+@admin.register(LogEntry)
+class LogEntryAdmin(ModelAdmin):
+    list_display = ['user','object_repr','content_type','action_flag','action_time']
+    list_display_links = None
+
+    def has_add_permission(self, request):
+        return False
     
+    def has_add_permission(self, request):
+            return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False

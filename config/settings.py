@@ -117,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -149,6 +149,22 @@ UNFOLD = {
     "SITE_TITLE": "WORLD NEWS ",
     "SITE_HEADER": "WORLD NEWS",
     "SITE_SUBHEADER": "ADMINISTRATION",
+     "COLORS": {
+        "primary": {
+            "50": "240, 248, 255",   # очень светлый голубой (почти белый)
+            "100": "210, 230, 255",  # нежно-голубой
+            "200": "175, 210, 250",  # светлый голубой
+            "300": "130, 180, 240",  # спокойный голубой
+            "400": "80, 150, 230",   # насыщенный голубой
+            "500": "37, 99, 235",    # основной синий (как tailwind blue-600)
+            "600": "30, 80, 200",    # более тёмный акцент
+            "700": "25, 65, 160",    # глубокий синий
+            "800": "20, 50, 120",    # тёмно-синий
+            "900": "15, 35, 85",     # почти navy
+            "950": "10, 20, 45",     
+            },
+
+    },
 
     "SIDEBAR": {
         "show_search": False,       # Search in applications and models names
@@ -188,6 +204,11 @@ UNFOLD = {
                         "title": _("Groups"),
                         "icon": "group",
                         "link": reverse_lazy("admin:auth_group_changelist"),
+                    },
+                    {
+                        "title": _("Logs"),
+                        "icon": "patient_list",
+                        "link": reverse_lazy("admin:admin_logentry_changelist"),
                     },
                 ],
             },
