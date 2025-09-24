@@ -1,5 +1,6 @@
 venv
 db.sqlite3
-media/
+media/Category
+media/News
 docker-compose.yml
 Dockerfile
