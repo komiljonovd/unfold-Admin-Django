@@ -29,8 +29,9 @@ SECRET_KEY = 'django-insecure-f7y^z8!580)+b%5ei&qhz)6cbw3b4#h^k!w0r&8(u13v@398p-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = ['https://c68b73c151a4.ngrok-free.app']
 
 # Application definition
 
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware', # Add this line
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -152,10 +154,15 @@ LANGUAGES = (
     ('en', 'English'),
 )
 
+
 UNFOLD = {
     "SITE_TITLE": "WORLD NEWS ",
     "SITE_HEADER": "WORLD NEWS",
     "SITE_SUBHEADER": "ADMINISTRATION",
+    'SHOW_LANGUAGES': True,
+    "SHOW_HISTORY": True, # show/hide "History" button, default: True
+    "SHOW_VIEW_ON_SITE": False, # show/hide "View on site" button, default: True
+    "SHOW_BACK_BUTTON": True,
      "COLORS": {
         "primary": {
             "50": "240, 248, 255",   # очень светлый голубой (почти белый)
@@ -171,7 +178,7 @@ UNFOLD = {
             "950": "10, 20, 45",     
             },
     },
-        "EXTENSIONS": {
+    "EXTENSIONS": {
         "modeltranslation": {
             "flags": {
                 "uz": "🇺🇿",
@@ -181,7 +188,7 @@ UNFOLD = {
         },
     },
     "SIDEBAR": {
-        "show_search": False,       # Search in applications and models names
+        "show_search": True,       # Search in applications and models names
         "command_search": False,    # Replace the sidebar search with the command search
         "show_all_applications": False,  # Dropdown with all applications and models
         "navigation": [
@@ -230,8 +237,6 @@ UNFOLD = {
 
 }
 
-
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
 MODELTRANSLATION_LANGUAGES = ('uz', 'ru', 'en')  # фиксируем порядок языков
 
-MODELTRANSLATION_USE_COUNTRY_FLAGS = True
